@@ -1,0 +1,450 @@
+/* General Reset */
+body,
+h1,
+h2,
+p,
+button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+}
+
+/* Dark Mode Body Styles */
+body.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+/* Main Menu Styles */
+.main-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.main-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
+}
+
+.main-menu a:hover {
+    background-color: #3a7ac5;
+}
+
+/* Dark Mode Main Menu */
+body.dark-mode .main-menu a {
+    color: #e0e0e0;
+}
+
+/* Header Styles */
+
+header {
+    background-color: #4A90E2;
+    color: white;
+    padding: 20px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    align-items: flex;
+    justify-content: space-evenly;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-size: large;
+}
+
+header h1 {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+
+}
+
+/* Dark Mode Header */
+body.dark-mode header {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img.png');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+
+button {
+    background: none;
+    border: none;
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
+}
+
+.main-menu button:hover,
+.main-menu a:hover {
+    background-color: orange;
+}
+
+header nav {
+    margin-left: 20px;
+}
+
+/* Dark Mode Button Styles */
+body.dark-mode button {
+    color: #e0e0e0;
+}
+
+.marquee {
+    margin-top: 75px;
+    animation: marquee 10s linear infinite;
+    background-color: #333;
+    color: #FF5733;
+    font-weight: bold;
+}
+
+/* Dark Mode Marquee */
+body.dark-mode .marquee {
+    background-color: #555;
+}
+
+/* Search Box Styles */
+.search-box {
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+    border: 2px solid #dabc0f;
+    border-radius: 7px;
+}
+
+.search-box input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid white;
+    border-radius: 5px 0 0 5px;
+    width: 200px;
+    box-shadow: none;
+    height: 21px;
+    /* Removes any default shadow */
+}
+
+.search-box button {
+    padding: 10px;
+    background-color: orange;
+    color: white;
+
+    /* Matches input's border size */
+    font-size: 15px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0;
+    /* Ensures no unwanted spacing around the button */
+    box-shadow: none;
+    /* Removes any default shadow */
+    height: 42px;
+}
+
+
+.search-box button:hover {
+    background-color: rgba(255, 166, 2, 0.932);
+}
+
+.search-box button:active {
+    background-color: orange;
+}
+
+/* Dark Mode Search Box */
+body.dark-mode .search-box {
+    border: 2px solid #3e3e3e;
+}
+
+body.dark-mode .search-box input {
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+}
+
+body.dark-mode .search-box button {
+    background-color: #e0a10b;
+}
+
+.username-display {
+    margin-left: auto;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    margin-right: 20px;
+    padding-right: 10px;
+}
+
+/* Product Grid Styles */
+.product-grid {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 0px;
+}
+
+/* Product Card Styles */
+.product-card {
+    background-color: white;
+    border: 1.5px solid orangered;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+/* Dark Mode Product Card */
+body.dark-mode .product-card {
+    background-color: #333;
+    border: 1.5px solid #FF5733;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+.product-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.product-card p {
+    margin: 10px;
+    line-height: 1.5;
+    flex-grow: 1;
+    /* Allows the description to adjust dynamically */
+}
+
+.product-card:hover img {
+    transform: scale(1.1);
+}
+
+.product-card h2 {
+    text-align: center;
+    color: #333;
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+/* Dark Mode Product Title and Price */
+body.dark-mode .product-card h2 {
+    color: #ffffff;
+}
+
+.product-card p {
+    margin: 10px;
+    line-height: 1.5;
+}
+
+body.dark-mode .product-card p {
+    color: #e0e0e0;
+}
+
+.product-card button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: orangered;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
+}
+
+.product-card button:hover {
+    background-color: rgba(255, 68, 0, 0.932);
+}
+
+/* Dark Mode Product Button */
+body.dark-mode .product-card button {
+    background-color: #e85a00;
+    color: white;
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    background-color: #24303d;
+    color: white;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-decoration: none;
+
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+
+}
+
+/* Dark Mode Footer */
+body.dark-mode footer {
+    background-color: #1c1c1c;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+button {
+    font-size: 16px;
+    padding: 10px 10px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.proceed-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    display: block;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.proceed-button:hover {
+    background-color: #45a049;
+}
+
+/* Theme Toggle Button */
+#theme-toggle-button {
+    background-color: #3e3e3e;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+    margin-left: 20px;
+}
+
+#theme-toggle-button:hover {
+    background-color: #555;
+}
+
+body.dark-mode #theme-toggle-button {
+    background-color: #e0e0e0;
+    color: #121212;
+}
+
+body.dark-mode #theme-toggle-button:hover {
+    background-color: #999;
+}
+
+
+
+/* Modal Background */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Slightly transparent dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #333;
+    /* Dark background for the modal */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    color: white;
+    /* Ensure text inside modal is white for visibility */
+}
+
+/* Close Button */
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* Hover effect for close button */
+.close:hover,
+.close:focus {
+    color: white;
+    /* Make close button visible when hovering */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Dark Mode - Input Labels in Modals */
+body.dark-mode .modal-content label {
+    color: #e0e0e0;
+}
+
+/* Dark Mode - Input Fields in Modals */
+body.dark-mode .modal-content input {
+    background-color: #444;
+    color: white;
+    border: 1px solid #555;
+}
+
+/* Dark Mode - Buttons inside Modals */
+body.dark-mode .modal-content button {
+    background-color: #e85a00;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+body.dark-mode .modal-content button:hover {
+    background-color: #d43f66;
+}

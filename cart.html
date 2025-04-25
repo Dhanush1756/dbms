@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart | TechNest</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f8f8;
+      color: #333;
+      padding: 20px;
+      margin: 0;
+    }
+
+    header {
+      background-color: #111;
+      color: #fff;
+      padding: 15px 0;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #222;
+      font-size: 32px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .cart-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin-bottom: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-item img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 20px;
+    }
+
+    .item-details {
+      flex: 1;
+    }
+
+    .item-details h4 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .item-details p {
+      color: #555;
+      font-size: 14px;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .quantity-controls button {
+      padding: 10px 15px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      color: #333;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .quantity-controls button:disabled {
+      background-color: #ddd;
+      cursor: not-allowed;
+    }
+
+    .item-total {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .delete-btn {
+      background-color: #e74c3c;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-left: 15px;
+    }
+
+    .delete-btn:hover {
+      background-color: #c0392b;
+    }
+
+    .total {
+      display: flex;
+      justify-content: flex-end;
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 30px;
+    }
+
+    .total span {
+      margin-left: 15px;
+      color: #555;
+    }
+
+    .btn-proceed {
+      background-color: #f0c14b;
+      color: #111;
+      padding: 15px 0;
+      border: 1px solid #a88734;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .btn-proceed:hover {
+      background-color: #e0a800;
+    }
+
+    .continue-shopping {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 16px;
+      color: #007185;
+      text-decoration: none;
+    }
+
+    .continue-shopping:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    TechNest
+  </header>
+
+  <div class="cart-container">
+    <h2>Your Cart</h2>
+
+    <div id="cart-items">
+      <!-- Cart items will be dynamically added here -->
+      {% for item in items %}
+      <div class="cart-item" id="item-{{ item.id }}">
+        <img src="{{ item.image }}" alt="{{ item.name }}">
+        <div class="item-details">
+          <h4>{{ item.name }}</h4>
+          <p>₹{{ item.price }} each</p>
+        </div>
+        <div class="quantity-controls">
+          <button class="minus" id="minus-{{ item.id }}" onclick="changeQuantity({{ item.id }}, -1)" {% if
+            item.quantity==1 %}disabled{% endif %}>-</button>
+          <span id="quantity-{{ item.id }}">{{ item.quantity }}</span>
+          <button class="plus" onclick="changeQuantity({{ item.id }}, 1)">+</button>
+        </div>
+        <div class="item-total" id="total-{{ item.id }}">₹{{ item.price * item.quantity }}</div>
+        <button class="delete-btn" onclick="deleteItem({{ item.id }})">Delete</button>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="total">
+      <span>Total</span>
+      <span id="cart-total">₹{{ total }}</span>
+    </div>
+
+    <form action="/checkout" method="post">
+      <button type="submit" class="btn-proceed">Proceed to Pay with Razorpay</button>
+    </form>
+
+    <a href="/buyer" class="continue-shopping">← Continue Shopping</a>
+  </div>
+
+  <script>
+    let totalPrice = {{ total }}; // initial total from backend
+
+    function formatCurrency(amount) {
+      return amount.toFixed(2); // Always show 2 decimal places
+    }
+
+    function changeQuantity(itemId, change) {
+      const quantitySpan = document.getElementById(`quantity-${itemId}`);
+      const itemTotal = document.getElementById(`total-${itemId}`);
+      const minusButton = document.getElementById(`minus-${itemId}`);
+      let currentQuantity = parseInt(quantitySpan.textContent);
+
+      // Change quantity and calculate new total
+      currentQuantity += change;
+
+      // Prevent negative quantity
+      if (currentQuantity < 1) return;
+
+      quantitySpan.textContent = currentQuantity;
+      const pricePerItem = parseFloat(itemTotal.textContent.split('₹')[1]) / (currentQuantity - change);
+      itemTotal.textContent = `₹${formatCurrency(pricePerItem * currentQuantity)}`;
+
+      // Update overall cart total
+      updateCartTotal(pricePerItem, change);
+
+      // Disable minus button if quantity is 1
+      minusButton.disabled = currentQuantity === 1;
+
+      // Update cart in database via AJAX
+      updateCartInDatabase(itemId, currentQuantity);
+    }
+
+    function updateCartTotal(pricePerItem, change) {
+      totalPrice += pricePerItem * change;
+      document.getElementById('cart-total').textContent = `₹${formatCurrency(totalPrice)}`;
+    }
+
+    function updateCartInDatabase(itemId, newQuantity) {
+      fetch('/update_cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          item_id: itemId,
+          quantity: newQuantity,
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            console.log('Cart updated');
+          } else {
+            console.log('Failed to update cart');
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function deleteItem(itemId) {
+      // Get the price of the item to subtract from total
+      const itemTotal = document.getElementById(`total-${itemId}`).textContent;
+      const itemPrice = parseFloat(itemTotal.split('₹')[1]);
+
+      // Remove the item from the DOM
+      const itemElement = document.getElementById(`item-${itemId}`);
+      itemElement.remove();
+
+      // Update the cart total after deletion
+      totalPrice -= itemPrice;
+      document.getElementById('cart-total').textContent = `₹${formatCurrency(totalPrice)}`;
+
+      // Make AJAX request to remove item from the database
+      fetch('/delete_cart_item', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          item_id: itemId,
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            console.log('Item deleted from cart in database');
+          } else {
+            console.log('Failed to delete item from database');
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+  </script>
+
+
+</body>
+
+</html>
